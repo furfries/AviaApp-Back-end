@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "YTr2KSCltpYnJTD4jgDmCZmB7XWs7JDcBcJ/gCED7d5632POpIWMWZi1zqqV2zgYma2fQc7xL4QxoXl4YGCWAw==",
+  "success": true,
+  "projectFilePath": "C:\\Projects\\AviaApp\\AviaApp-Back-end\\AviaApp\\AviaApp\\AviaApp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\p.kryshyn\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\p.kryshyn\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\p.kryshyn\\.nuget\\packages\\swashbuckle.aspnetcore\\5.6.3\\swashbuckle.aspnetcore.5.6.3.nupkg.sha512",
+    "C:\\Users\\p.kryshyn\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\5.6.3\\swashbuckle.aspnetcore.swagger.5.6.3.nupkg.sha512",
+    "C:\\Users\\p.kryshyn\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\5.6.3\\swashbuckle.aspnetcore.swaggergen.5.6.3.nupkg.sha512",
+    "C:\\Users\\p.kryshyn\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\5.6.3\\swashbuckle.aspnetcore.swaggerui.5.6.3.nupkg.sha512"
+  ],
+  "logs": []
+}
