@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AviaApp.Enums;
 using AviaApp.Models;
 using AviaApp.Services.Contracts;
 using Data.Entities;
@@ -45,6 +46,7 @@ public class AuthService : IAuthService
         {
             Token = new JwtSecurityTokenHandler().WriteToken(token),
             ValidTo = token.ValidTo,
+            Roles = userRoles,
         };
     }
 
@@ -64,6 +66,7 @@ public class AuthService : IAuthService
         user.UserName = user.Email;
         
         var result = await _userManager.CreateAsync(user, model.Password);
+        await _userManager.AddToRoleAsync(user, Role.User);
         if (!result.Succeeded)
         {
             return new AuthResponse

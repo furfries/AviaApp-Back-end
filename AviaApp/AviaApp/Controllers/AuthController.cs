@@ -6,7 +6,6 @@ using Data.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 
 namespace AviaApp.Controllers;
 
@@ -15,7 +14,7 @@ public class AuthController : ControllerBase
     private readonly UserManager<AviaAppUser> _userManager;
     private readonly IAuthService _authService;
 
-    public AuthController(UserManager<AviaAppUser> userManager, IConfiguration configuration, IAuthService authService)
+    public AuthController(UserManager<AviaAppUser> userManager, IAuthService authService)
     {
         _userManager = userManager;
         _authService = authService;
@@ -25,7 +24,7 @@ public class AuthController : ControllerBase
     [Route("login")]
     public async Task<IActionResult> Login([FromBody] LoginModel model)
     {
-        var user = await _userManager.FindByNameAsync(model.Username);
+        var user = await _userManager.FindByEmailAsync(model.Email);
         if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
         {
             return Ok(await _authService.LoginAsync(user));

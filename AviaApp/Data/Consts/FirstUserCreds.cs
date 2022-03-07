@@ -8,7 +8,7 @@ public class FirstUserCreds
 
     public const string UserRole = "user";
 
-    public const string ModeratorRole = "moderator";
+    public const string EmployeeRole = "employee";
 
     public const string AdminRole = "admin";
 }

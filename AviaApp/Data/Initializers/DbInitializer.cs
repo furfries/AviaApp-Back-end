@@ -14,9 +14,9 @@ public static class DbInitializer
             await roleManager.CreateAsync(new IdentityRole(FirstUserCreds.AdminRole));
         }
 
-        if (await roleManager.FindByNameAsync(FirstUserCreds.ModeratorRole) == null)
+        if (await roleManager.FindByNameAsync(FirstUserCreds.EmployeeRole) == null)
         {
-            await roleManager.CreateAsync(new IdentityRole(FirstUserCreds.ModeratorRole));
+            await roleManager.CreateAsync(new IdentityRole(FirstUserCreds.EmployeeRole));
         }
 
         if (await roleManager.FindByNameAsync(FirstUserCreds.UserRole) == null)
