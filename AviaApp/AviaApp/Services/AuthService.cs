@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using AviaApp.Models;
 using AviaApp.Services.Contracts;
 using Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 
 namespace AviaApp.Services;
 
@@ -39,11 +37,8 @@ public class AuthService : IAuthService
             authClaims.Add(new Claim(ClaimTypes.Role, userRole));
         }
 
-        var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
-
         var token = new JwtSecurityToken(
-            claims: authClaims,
-            signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+            claims: authClaims
         );
 
         return new LoginResponse

@@ -1,11 +1,12 @@
 ﻿using Data.Consts;
+using Data.Entities;
 using Microsoft.AspNetCore.Identity;
 
 namespace Data.Initializers;
 
 public static class DbInitializer
 {
-    public static async Task InitializeAsync(UserManager<IdentityUser> userManager,
+    public static async Task InitializeAsync(UserManager<AviaAppUser> userManager,
         RoleManager<IdentityRole> roleManager)
     {
         if (await roleManager.FindByNameAsync(FirstUserCreds.AdminRole) == null)
@@ -25,7 +26,7 @@ public static class DbInitializer
 
         if (await userManager.FindByEmailAsync(FirstUserCreds.AdminEmail) == null)
         {
-            var admin = new IdentityUser { Email = FirstUserCreds.AdminEmail, UserName = "Admin" };
+            var admin = new AviaAppUser { Email = FirstUserCreds.AdminEmail, UserName = "Admin" };
             var result = await userManager.CreateAsync(admin, FirstUserCreds.AdminPassword);
 
             if (result.Succeeded)

@@ -1,4 +1,6 @@
+using System;
 using System.Threading.Tasks;
+using Data.Entities;
 using Data.Initializers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -17,11 +19,11 @@ namespace AviaApp
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+                    var userManager = services.GetRequiredService<UserManager<AviaAppUser>>();
                     var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
                     await DbInitializer.InitializeAsync(userManager, rolesManager);
                 }
-                catch
+                catch(Exception ex)
                 {
                     // ignored
                 }
