@@ -1,5 +1,6 @@
 ﻿using Data.Consts;
 using Data.Entities;
+using Data.Enums;
 using Microsoft.AspNetCore.Identity;
 
 namespace Data.Initializers;
@@ -31,7 +32,9 @@ public static class DbInitializer
 
             if (result.Succeeded)
             {
-                await userManager.AddToRoleAsync(admin, FirstUserCreds.AdminRole);
+                await userManager.AddToRoleAsync(admin, Role.User);
+                await userManager.AddToRoleAsync(admin, Role.Employee);
+                await userManager.AddToRoleAsync(admin, Role.Admin);
 
                 var token = await userManager.GenerateEmailConfirmationTokenAsync(admin);
                 await userManager.ConfirmEmailAsync(admin, token);
