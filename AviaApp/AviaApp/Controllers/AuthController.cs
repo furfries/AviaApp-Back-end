@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AviaApp.Controllers;
 
+[ApiController]
+[Route("[controller]")]
 public class AuthController : ControllerBase
 {
     private readonly UserManager<AviaAppUser> _userManager;
