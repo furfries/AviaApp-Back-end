@@ -1,4 +1,4 @@
-﻿namespace AviaApp.Enums;
+﻿namespace Data.Enums;
 
 public static class Role
 {

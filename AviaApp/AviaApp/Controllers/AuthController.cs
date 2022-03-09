@@ -30,7 +30,7 @@ public class AuthController : ControllerBase
             return Ok(await _authService.LoginAsync(user));
         }
 
-        return Unauthorized();
+        return Unauthorized("Wrong email or password");
     }
 
     [HttpPost]
@@ -40,7 +40,7 @@ public class AuthController : ControllerBase
         var result = await _authService.RegisterAsync(model);
 
         return result.Status.Equals("Error", StringComparison.OrdinalIgnoreCase)
-            ? StatusCode(StatusCodes.Status500InternalServerError, result)
+            ? BadRequest(result)
             : Ok(result);
     }
 }
