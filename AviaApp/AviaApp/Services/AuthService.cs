@@ -9,19 +9,16 @@ using AviaApp.Services.Contracts;
 using Data.Entities;
 using Data.Enums;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 
 namespace AviaApp.Services;
 
 public class AuthService : IAuthService
 {
     private readonly UserManager<AviaAppUser> _userManager;
-    private readonly IConfiguration _configuration;
 
-    public AuthService(UserManager<AviaAppUser> userManager, IConfiguration configuration)
+    public AuthService(UserManager<AviaAppUser> userManager)
     {
         _userManager = userManager;
-        _configuration = configuration;
     }
 
     public async Task<LoginResponse> LoginAsync(AviaAppUser user)
@@ -46,7 +43,6 @@ public class AuthService : IAuthService
         return new LoginResponse
         {
             Token = new JwtSecurityTokenHandler().WriteToken(token),
-            ValidTo = token.ValidTo,
             Roles = userRoles,
         };
     }

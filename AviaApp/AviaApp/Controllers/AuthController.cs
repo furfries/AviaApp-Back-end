@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using AviaApp.Models;
 using AviaApp.Services.Contracts;
 using Data.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,7 +23,7 @@ public class AuthController : ControllerBase
 
     [HttpPost]
     [Route("login")]
-    public async Task<IActionResult> Login([FromBody] LoginModel model)
+    public async Task<IActionResult> LoginAsync([FromBody] LoginModel model)
     {
         var user = await _userManager.FindByEmailAsync(model.Email);
         if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
@@ -37,7 +36,7 @@ public class AuthController : ControllerBase
 
     [HttpPost]
     [Route("register")]
-    public async Task<IActionResult> Register([FromBody] RegisterModel model)
+    public async Task<IActionResult> RegisterAsync([FromBody] RegisterModel model)
     {
         var result = await _authService.RegisterAsync(model);
 

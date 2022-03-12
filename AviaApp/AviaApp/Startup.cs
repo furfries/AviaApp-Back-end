@@ -31,6 +31,7 @@ namespace AviaApp
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IUserService, UserService>();
 
             // For Identity  
             services.AddIdentity<AviaAppUser, IdentityRole>()
