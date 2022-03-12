@@ -1,3 +1,6 @@
+using System;
+using System.IO;
+using System.Reflection;
 using System.Text;
 using AviaApp.Services;
 using AviaApp.Services.Contracts;
@@ -96,6 +99,8 @@ namespace AviaApp
                         new string[] { }
                     }
                 });
+                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                swagger.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
 
             services.AddCors(options =>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using AviaApp.Enums;
 
 namespace AviaApp.Models;
 

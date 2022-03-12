@@ -7,4 +7,6 @@ namespace AviaApp.Services.Contracts;
 public interface IUserService
 {
     public Task<IList<UserDto>> GetUsersAsync();
+
+    public Task<UpdateRoleResponse> AddRoleAsync(UpdateRoleModel model);
 }

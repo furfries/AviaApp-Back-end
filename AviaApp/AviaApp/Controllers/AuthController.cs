@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AviaApp.Enums;
 using AviaApp.Models;
 using AviaApp.Services.Contracts;
 using Data.Entities;
@@ -40,7 +41,7 @@ public class AuthController : ControllerBase
     {
         var result = await _authService.RegisterAsync(model);
 
-        return result.Status.Equals("Error", StringComparison.OrdinalIgnoreCase)
+        return result.Status.Equals(Status.Error, StringComparison.OrdinalIgnoreCase)
             ? BadRequest(result)
             : Ok(result);
     }

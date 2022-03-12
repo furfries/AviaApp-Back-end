@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AviaApp.Enums;
 using AviaApp.Models;
 using AviaApp.Services.Contracts;
 using Data.Entities;
@@ -63,7 +64,7 @@ public class AuthService : IAuthService
         var userExists = await _userManager.FindByNameAsync(model.Email);
         if (userExists != null)
         {
-            return new AuthResponse {Status = "Error", Reasons = new List<string> {"User is already exists"},};
+            return new AuthResponse {Status = Status.Error, Reasons = new List<string> {"User already exists"},};
         }
 
         var user = new AviaAppUser
@@ -78,13 +79,13 @@ public class AuthService : IAuthService
         {
             return new AuthResponse
             {
-                Status = "Error",
+                Status = Status.Error,
                 Reasons = result.Errors.Select(x => x.Description).ToList(),
             };
         }
 
         await _userManager.AddToRoleAsync(user, Role.User);
 
-        return new AuthResponse {Status = "Success", Reasons = new List<string> {"User created successfully!"},};
+        return new AuthResponse {Status = Status.Success, Reasons = new List<string> {"User created successfully!"},};
     }
 }
