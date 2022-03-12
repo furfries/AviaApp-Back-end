@@ -10,19 +10,24 @@ public static class DbInitializer
     public static async Task InitializeAsync(UserManager<AviaAppUser> userManager,
         RoleManager<IdentityRole> roleManager)
     {
-        if (await roleManager.FindByNameAsync(FirstUserCreds.AdminRole) == null)
+        if (await roleManager.FindByNameAsync(Role.Admin) == null)
         {
-            await roleManager.CreateAsync(new IdentityRole(FirstUserCreds.AdminRole));
+            await roleManager.CreateAsync(new IdentityRole(Role.Admin));
         }
 
-        if (await roleManager.FindByNameAsync(FirstUserCreds.EmployeeRole) == null)
+        if (await roleManager.FindByNameAsync(Role.Employee) == null)
         {
-            await roleManager.CreateAsync(new IdentityRole(FirstUserCreds.EmployeeRole));
+            await roleManager.CreateAsync(new IdentityRole(Role.Employee));
         }
 
-        if (await roleManager.FindByNameAsync(FirstUserCreds.UserRole) == null)
+        if (await roleManager.FindByNameAsync(Role.User) == null)
         {
-            await roleManager.CreateAsync(new IdentityRole(FirstUserCreds.UserRole));
+            await roleManager.CreateAsync(new IdentityRole(Role.User));
+        }
+
+        if (await roleManager.FindByNameAsync(Role.Banned) == null)
+        {
+            await roleManager.CreateAsync(new IdentityRole(Role.Banned));
         }
 
         if (await userManager.FindByEmailAsync(FirstUserCreds.AdminEmail) == null)
