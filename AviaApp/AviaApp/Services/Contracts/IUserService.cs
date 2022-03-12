@@ -9,4 +9,6 @@ public interface IUserService
     public Task<IList<UserDto>> GetUsersAsync();
 
     public Task<UpdateRoleResponse> AddRoleAsync(UpdateRoleModel model);
+
+    public Task<UpdateRoleResponse> DeleteRoleAsync(UpdateRoleModel model);
 }
