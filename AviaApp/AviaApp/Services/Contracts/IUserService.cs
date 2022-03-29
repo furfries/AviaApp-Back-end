@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AviaApp.Models;
+using AviaApp.Models.Dto;
 
 namespace AviaApp.Services.Contracts;
 

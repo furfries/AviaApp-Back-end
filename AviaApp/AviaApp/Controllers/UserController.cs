@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AviaApp.Enums;
 using AviaApp.Models;
+using AviaApp.Models.Dto;
 using AviaApp.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
