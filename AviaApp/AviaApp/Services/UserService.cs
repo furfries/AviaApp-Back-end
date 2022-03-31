@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AviaApp.Enums;
 using AviaApp.Models;
+using AviaApp.Models.Dto;
 using AviaApp.Services.Contracts;
 using Data.Entities;
 using Data.Enums;

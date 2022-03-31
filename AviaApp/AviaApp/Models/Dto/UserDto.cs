@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace AviaApp.Models;
+namespace AviaApp.Models.Dto;
 
 public class UserDto
 {

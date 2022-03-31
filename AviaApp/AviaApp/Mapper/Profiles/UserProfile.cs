@@ -1,5 +1,5 @@
 using AutoMapper;
-using AviaApp.Models;
+using AviaApp.Models.Dto;
 using Data.Entities;
 
 namespace AviaApp.Mapper.Profiles;
