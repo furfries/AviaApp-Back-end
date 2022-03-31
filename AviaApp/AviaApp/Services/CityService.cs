@@ -31,8 +31,8 @@ public class CityService : ICityService
 
     public async Task<CityDto> GetCityByIdAsync(Guid cityId)
     {
-        var country = await GetCityIfExistsAsync(cityId);
-        return _mapper.Map<CityDto>(country);
+        var city = await GetCityIfExistsAsync(cityId);
+        return _mapper.Map<CityDto>(city);
     }
 
     public async Task AddCityAsync(AddCityRequest request)
@@ -81,7 +81,7 @@ public class CityService : ICityService
         var city = await _context.Cities.FirstOrDefaultAsync(x =>
             x.Name == cityName && x.Country.Id == countryId);
 
-        if (city == null)
+        if (city != null)
             throw new Exception($"The city {cityName} already exists");
     }
 }

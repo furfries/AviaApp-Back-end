@@ -11,43 +11,44 @@ namespace AviaApp.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class CityController : ControllerBase
+public class AirportController : ControllerBase
 {
-    private readonly ICityService _cityService;
+    
+    private readonly IAirportService _airportService;
 
-    public CityController(ICityService cityService)
+    public AirportController(IAirportService airportService)
     {
-        _cityService = cityService;
+        _airportService = airportService;
     }
 
     /// <summary>
-    /// Returns list of cities by country Id
-    /// </summary>
-    /// <remarks>Endpoint available for authorized users</remarks>>
-    /// <param name="countryId">Country Id</param>
-    [HttpGet]
-    [Route("list/{countryId:guid}")]
-    [Authorize]
-    [ProducesResponseType(typeof(List<CityDto>), 200)]
-    public async Task<IActionResult> GetCitiesAsync(Guid countryId)
-    {
-        return Ok(await _cityService.GetCitiesAsync(countryId));
-    }
-
-    /// <summary>
-    /// Returns city by city Id
+    /// Returns list of airports by city Id
     /// </summary>
     /// <remarks>Endpoint available for authorized users</remarks>>
     /// <param name="cityId">City Id</param>
     [HttpGet]
-    [Route("{cityId:guid}")]
+    [Route("list/{cityId:guid}")]
     [Authorize]
-    [ProducesResponseType(typeof(CityDto), 200)]
-    public async Task<IActionResult> GetCityByIdAsync(Guid cityId)
+    [ProducesResponseType(typeof(List<AirportDto>), 200)]
+    public async Task<IActionResult> GetAirportsAsync(Guid cityId)
+    {
+        return Ok(await _airportService.GetAirportsAsync(cityId));
+    }
+
+    /// <summary>
+    /// Returns airport by airport Id
+    /// </summary>
+    /// <remarks>Endpoint available for authorized users</remarks>>
+    /// <param name="airportId">Airport Id</param>
+    [HttpGet]
+    [Route("{airportId:guid}")]
+    [Authorize]
+    [ProducesResponseType(typeof(AirportDto), 200)]
+    public async Task<IActionResult> GetAirportByIdAsync(Guid airportId)
     {
         try
         {
-            return Ok(await _cityService.GetCityByIdAsync(cityId));
+            return Ok(await _airportService.GetAirportByIdAsync(airportId));
         }
         catch (Exception e)
         {
@@ -56,20 +57,20 @@ public class CityController : ControllerBase
     }
 
     /// <summary>
-    /// Adds city
+    /// Adds airport
     /// </summary>
     /// <remarks>
     /// Endpoint available for "admin" and "employee" roles<br/>
-    /// The field "name" is unique for country group
+    /// The field "name" is unique for city group
     /// </remarks>>
     [HttpPost]
     [Authorize(Roles = "admin,employee")]
-    public async Task<IActionResult> AddCityAsync(AddCityRequest request)
+    public async Task<IActionResult> AddAirportAsync(AddAirportRequest request)
     {
         try
         {
-            await _cityService.AddCityAsync(request);
-            return Ok($"The city {request.CityName} has been added successfully");
+            await _airportService.AddAirportAsync(request);
+            return Ok($"The airport {request.AirportName} has been added successfully");
         }
         catch (Exception e)
         {
@@ -78,20 +79,20 @@ public class CityController : ControllerBase
     }
 
     /// <summary>
-    /// Updates city name
+    /// Updates airport name
     /// </summary>
     /// <remarks>
     /// Endpoint available for "admin" and "employee" roles<br/>
-    /// The field "name" is unique for country group
+    /// The field "name" is unique for city group
     /// </remarks>>
     [HttpPut]
     [Authorize(Roles = "admin,employee")]
-    public async Task<IActionResult> UpdateCityNameAsync([FromBody] UpdateCityRequest request)
+    public async Task<IActionResult> UpdateAirportNameAsync([FromBody] UpdateAirportRequest request)
     {
         try
         {
-            await _cityService.UpdateCityNameAsync(request);
-            return Ok("The city has been updated successfully");
+            await _airportService.UpdateAirportNameAsync(request);
+            return Ok("The airport has been updated successfully");
         }
         catch (Exception e)
         {
@@ -100,20 +101,19 @@ public class CityController : ControllerBase
     }
 
     /// <summary>
-    /// Deletes city
+    /// Deletes airport
     /// </summary>
     /// <remarks>
     /// Endpoint available for "admin" and "employee" roles<br/>
-    /// Related objects will also be deleted
     /// </remarks>>
-    [HttpDelete("{cityId:guid}")]
+    [HttpDelete("{airportId:guid}")]
     [Authorize(Roles = "admin,employee")]
-    public async Task<IActionResult> DeleteCityAsync(Guid cityId)
+    public async Task<IActionResult> DeleteAirportAsync(Guid airportId)
     {
         try
         {
-            await _cityService.DeleteCityAsync(cityId);
-            return Ok("The city has been deleted");
+            await _airportService.DeleteAirportAsync(airportId);
+            return Ok("The airport has been deleted");
         }
         catch (Exception e)
         {
