@@ -10,12 +10,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AviaApp.Services;
 
-public class LocationService : ILocationService
+public class CountryService : ICountryService
 {
     private readonly AviaAppDbContext _context;
     private readonly IMapper _mapper;
 
-    public LocationService(AviaAppDbContext context, IMapper mapper)
+    public CountryService(AviaAppDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
@@ -26,9 +26,10 @@ public class LocationService : ILocationService
         return _mapper.Map<IList<CountryDto>>(await _context.Countries.ToListAsync());
     }
 
-    public async Task<CountryDto> GetCountryByIdAsync(Guid id)
+    public async Task<CountryDto> GetCountryByIdAsync(Guid countryId)
     {
-        return _mapper.Map<CountryDto>(await _context.Countries.FirstOrDefaultAsync(x => x.Id == id));
+        var country = await GetCountryIfExistsAsync(countryId);
+        return _mapper.Map<CountryDto>(country);
     }
 
     public async Task AddCountryAsync(string countryName)
@@ -40,20 +41,25 @@ public class LocationService : ILocationService
             Id = new Guid(),
             Name = countryName,
         };
-        await _context.AddAsync(country);
+        await _context.Countries.AddAsync(country);
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateCountryNameAsync(CountryDto country)
+    public async Task UpdateCountryNameAsync(CountryDto updatedCountry)
     {
-        var existingCountry = await _context.Countries.FirstOrDefaultAsync(x => x.Id == country.Id);
-        if (existingCountry == null)
-            throw new Exception($"This country does not exist");
+        var existingCountry = await GetCountryIfExistsAsync(updatedCountry.Id);
+        await CheckCountryName(updatedCountry.Name);
 
-        await CheckCountryName(country.Name);
-        existingCountry.Name = country.Name;
+        existingCountry.Name = updatedCountry.Name;
 
         _context.Countries.Update(existingCountry);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task DeleteCountryAsync(Guid countryId)
+    {
+        var country = await GetCountryIfExistsAsync(countryId);
+        _context.Countries.Remove(country);
         await _context.SaveChangesAsync();
     }
 
@@ -62,5 +68,14 @@ public class LocationService : ILocationService
         var isCountryExist = await _context.Countries.AnyAsync(x => x.Name == countryName);
         if (isCountryExist)
             throw new Exception($"The country {countryName} already exists");
+    }
+
+    private async Task<Country> GetCountryIfExistsAsync(Guid countryId)
+    {
+        var country = await _context.Countries.FirstOrDefaultAsync(x => x.Id == countryId);
+        if (country == null)
+            throw new Exception("This country has not been found");
+
+        return country;
     }
 }

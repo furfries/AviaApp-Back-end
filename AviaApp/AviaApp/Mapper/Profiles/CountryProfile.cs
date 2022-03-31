@@ -4,9 +4,9 @@ using Data.Entities;
 
 namespace AviaApp.Mapper.Profiles;
 
-public class LocationProfile : Profile
+public class CountryProfile : Profile
 {
-    public LocationProfile()
+    public CountryProfile()
     {
         CreateMap<Country, CountryDto>();
         CreateMap<CountryDto, Country>();

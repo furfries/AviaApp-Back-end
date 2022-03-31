@@ -1,5 +1,4 @@
 using System;
-using Data.Entities;
 
 namespace AviaApp.Models.Dto;
 
@@ -11,5 +10,5 @@ public class CityDto
 
     public string Name { get; set; }
 
-    public Country Country { get; set; }
+    public CountryDto Country { get; set; }
 }

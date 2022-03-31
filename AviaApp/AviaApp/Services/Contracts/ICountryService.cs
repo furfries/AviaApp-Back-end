@@ -5,13 +5,15 @@ using AviaApp.Models.Dto;
 
 namespace AviaApp.Services.Contracts;
 
-public interface ILocationService
+public interface ICountryService
 {
     Task<IList<CountryDto>> GetCountriesAsync();
 
-    Task<CountryDto> GetCountryByIdAsync(Guid id);
+    Task<CountryDto> GetCountryByIdAsync(Guid countryId);
 
     Task AddCountryAsync(string countryName);
 
-    Task UpdateCountryNameAsync(CountryDto country);
+    Task UpdateCountryNameAsync(CountryDto updatedCountry);
+
+    Task DeleteCountryAsync(Guid countryId);
 }

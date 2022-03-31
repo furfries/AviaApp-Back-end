@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AviaApp.Models.Dto;
+using AviaApp.Models.Requests;
 using AviaApp.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,42 +11,43 @@ namespace AviaApp.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class CountryController : ControllerBase
+public class CityController : ControllerBase
 {
-    private readonly ICountryService _countryService;
+    private readonly ICityService _cityService;
 
-    public CountryController(ICountryService countryService)
+    public CityController(ICityService cityService)
     {
-        _countryService = countryService;
+        _cityService = cityService;
     }
 
     /// <summary>
-    /// Returns list of countries
-    /// </summary>
-    /// <remarks>Endpoint available for authorized users</remarks>>
-    [HttpGet]
-    [Route("list")]
-    [Authorize]
-    [ProducesResponseType(typeof(List<CountryDto>), 200)]
-    public async Task<IActionResult> GetCountriesAsync()
-    {
-        return Ok(await _countryService.GetCountriesAsync());
-    }
-
-    /// <summary>
-    /// Returns country by country Id
+    /// Returns list of cities by country Id
     /// </summary>
     /// <remarks>Endpoint available for authorized users</remarks>>
     /// <param name="countryId">Country Id</param>
     [HttpGet]
-    [Route("{countryId:guid}")]
+    [Route("list/{countryId:guid}")]
+    [Authorize]
+    [ProducesResponseType(typeof(List<CountryDto>), 200)]
+    public async Task<IActionResult> GetCitiesAsync(Guid countryId)
+    {
+        return Ok(await _cityService.GetCitiesAsync(countryId));
+    }
+
+    /// <summary>
+    /// Returns city by city Id
+    /// </summary>
+    /// <remarks>Endpoint available for authorized users</remarks>>
+    /// <param name="cityId">City Id</param>
+    [HttpGet]
+    [Route("{cityId:guid}")]
     [Authorize]
     [ProducesResponseType(typeof(CountryDto), 200)]
-    public async Task<IActionResult> GetCountryByIdAsync(Guid countryId)
+    public async Task<IActionResult> GetCountryByIdAsync(Guid cityId)
     {
         try
         {
-            return Ok(await _countryService.GetCountryByIdAsync(countryId));
+            return Ok(await _cityService.GetCityByIdAsync(cityId));
         }
         catch (Exception e)
         {
@@ -54,20 +56,20 @@ public class CountryController : ControllerBase
     }
 
     /// <summary>
-    /// Adds country
+    /// Adds city
     /// </summary>
     /// <remarks>
     /// Endpoint available for "admin" and "employee" roles<br/>
-    /// The field "name" is unique
+    /// The field "name" is unique for country group
     /// </remarks>>
     [HttpPost]
     [Authorize(Roles = "admin,employee")]
-    public async Task<IActionResult> AddCountryAsync(string countryName)
+    public async Task<IActionResult> AddCityAsync(AddCityRequest request)
     {
         try
         {
-            await _countryService.AddCountryAsync(countryName);
-            return Ok($"The country {countryName} has been added successfully");
+            await _cityService.AddCityAsync(request);
+            return Ok($"The city {request.CityName} has been added successfully");
         }
         catch (Exception e)
         {
@@ -76,20 +78,20 @@ public class CountryController : ControllerBase
     }
 
     /// <summary>
-    /// Updates country name
+    /// Updates city name
     /// </summary>
     /// <remarks>
     /// Endpoint available for "admin" and "employee" roles<br/>
-    /// The field "name" is unique
+    /// The field "name" is unique for country group
     /// </remarks>>
     [HttpPut]
     [Authorize(Roles = "admin,employee")]
-    public async Task<IActionResult> UpdateCountryNameAsync([FromBody] CountryDto updatedCountry)
+    public async Task<IActionResult> UpdateCityNameAsync([FromBody] UpdateCityRequest request)
     {
         try
         {
-            await _countryService.UpdateCountryNameAsync(updatedCountry);
-            return Ok("The country has been updated successfully");
+            await _cityService.UpdateCityNameAsync(request);
+            return Ok("The city has been updated successfully");
         }
         catch (Exception e)
         {
@@ -98,20 +100,20 @@ public class CountryController : ControllerBase
     }
 
     /// <summary>
-    /// Deletes country
+    /// Deletes city
     /// </summary>
     /// <remarks>
     /// Endpoint available for "admin" and "employee" roles<br/>
     /// Related objects will also be deleted
     /// </remarks>>
-    [HttpDelete("{countryId:guid}")]
+    [HttpDelete("{cityId:guid}")]
     [Authorize(Roles = "admin,employee")]
-    public async Task<IActionResult> DeleteCountryAsync(Guid countryId)
+    public async Task<IActionResult> DeleteCountryAsync(Guid cityId)
     {
         try
         {
-            await _countryService.DeleteCountryAsync(countryId);
-            return Ok("The country has been deleted");
+            await _cityService.DeleteCityAsync(cityId);
+            return Ok("The city has been deleted");
         }
         catch (Exception e)
         {

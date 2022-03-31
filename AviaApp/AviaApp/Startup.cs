@@ -37,7 +37,8 @@ namespace AviaApp
 
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<ILocationService, LocationService>();
+            services.AddScoped<ICountryService, CountryService>();
+            services.AddScoped<ICityService, CityService>();
 
             // For Identity  
             services.AddIdentity<AviaAppUser, IdentityRole>()
