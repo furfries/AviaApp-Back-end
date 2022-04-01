@@ -18,9 +18,8 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore
-      working-directory: AviaApp/AviaApp/
+      run: dotnet restore ./AviaApp/
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore ./AviaApp
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal ./AviaApp
