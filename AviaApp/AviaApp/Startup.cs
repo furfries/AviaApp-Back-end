@@ -69,6 +69,8 @@ namespace AviaApp
                     };
                 });
 
+            services.AddMvc();
+
             services.AddSwaggerGen(swagger =>
             {
                 //This is to generate the Default UI of Swagger Documentation    
@@ -126,7 +128,6 @@ namespace AviaApp
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AviaApp v1"));
 
@@ -139,7 +140,11 @@ namespace AviaApp
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapSwagger();
+            });
         }
     }
 }
