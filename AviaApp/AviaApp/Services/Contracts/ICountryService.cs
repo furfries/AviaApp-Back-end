@@ -16,4 +16,6 @@ public interface ICountryService
     Task UpdateCountryNameAsync(CountryDto updatedCountry);
 
     Task DeleteCountryAsync(Guid countryId);
+
+    Task AssignCountryAsync(AirportDto airport);
 }

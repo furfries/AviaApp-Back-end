@@ -63,6 +63,12 @@ public class CountryService : ICountryService
         await _context.SaveChangesAsync();
     }
 
+    public async Task AssignCountryAsync(AirportDto airport)
+    {
+        var country = await _context.Countries.FirstOrDefaultAsync(x => x.Id == airport.City.CountryId);
+        airport.City.Country = _mapper.Map<CountryDto>(country);
+    }
+
     private async Task CheckCountryName(string countryName)
     {
         var isCountryExist = await _context.Countries.AnyAsync(x => x.Name == countryName);
