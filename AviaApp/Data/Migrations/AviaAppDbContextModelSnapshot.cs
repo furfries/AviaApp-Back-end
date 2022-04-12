@@ -161,8 +161,14 @@ namespace Data.Migrations
                     b.Property<Guid>("AirportToId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("FlightDateTime")
+                    b.Property<DateTime>("ArrivalDateTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DepartureDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsCanceled")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

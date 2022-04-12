@@ -20,12 +20,12 @@ public class CountryController : ControllerBase
     }
 
     /// <summary>
-    /// Returns list of countries
+    /// Returns list of countries(Admin, Employee)
     /// </summary>
     /// <remarks>Endpoint available for authorized users</remarks>>
     [HttpGet]
     [Route("list")]
-    [Authorize]
+    [Authorize(Roles="admin,employee,user")]
     [ProducesResponseType(typeof(List<CountryDto>), 200)]
     public async Task<IActionResult> GetCountriesAsync()
     {
@@ -33,13 +33,13 @@ public class CountryController : ControllerBase
     }
 
     /// <summary>
-    /// Returns country by country Id
+    /// Returns country by country Id(Admin, Employee)
     /// </summary>
     /// <remarks>Endpoint available for authorized users</remarks>>
     /// <param name="countryId">Country Id</param>
     [HttpGet]
     [Route("{countryId:guid}")]
-    [Authorize]
+    [Authorize(Roles="admin,employee,user")]
     [ProducesResponseType(typeof(CountryDto), 200)]
     public async Task<IActionResult> GetCountryByIdAsync(Guid countryId)
     {
@@ -54,7 +54,7 @@ public class CountryController : ControllerBase
     }
 
     /// <summary>
-    /// Adds country
+    /// Adds country(Admin, Employee)
     /// </summary>
     /// <remarks>
     /// Endpoint available for "admin" and "employee" roles<br/>
@@ -76,7 +76,7 @@ public class CountryController : ControllerBase
     }
 
     /// <summary>
-    /// Updates country name
+    /// Updates country name(Admin, Employee)
     /// </summary>
     /// <remarks>
     /// Endpoint available for "admin" and "employee" roles<br/>
@@ -98,7 +98,7 @@ public class CountryController : ControllerBase
     }
 
     /// <summary>
-    /// Deletes country
+    /// Deletes country(Admin, Employee)
     /// </summary>
     /// <remarks>
     /// Endpoint available for "admin" and "employee" roles<br/>

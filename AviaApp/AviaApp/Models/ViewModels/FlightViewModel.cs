@@ -1,22 +1,21 @@
-﻿namespace Data.Entities;
+﻿using System;
 
-public class Flight
+namespace AviaApp.Models.ViewModels;
+
+public class FlightViewModel
 {
     public Guid Id { get; set; }
-
-    public Guid AirportFromId { get; set; }
-
-    public Guid AirportToId { get; set; }
 
     public string Airplane { get; set; }
 
     public DateTime DepartureDateTime { get; set; }
-
+    
     public DateTime ArrivalDateTime { get; set; }
 
     public bool IsCanceled { get; set; }
 
-    public Airport AirportFrom { get; set; }
+    public LocationViewModel LocationFrom { get; set; }
 
-    public Airport AirportTo { get; set; }
+    public LocationViewModel LocationTo { get; set; }
+    
 }

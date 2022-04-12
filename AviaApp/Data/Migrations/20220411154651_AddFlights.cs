@@ -17,7 +17,9 @@ namespace Data.Migrations
                     AirportFromId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AirportToId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Airplane = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FlightDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DepartureDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ArrivalDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsCanceled = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

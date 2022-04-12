@@ -22,13 +22,13 @@ public class AirportController : ControllerBase
     }
 
     /// <summary>
-    /// Returns list of airports by city Id
+    /// Returns list of airports by city Id(Admin, Employee, User)
     /// </summary>
     /// <remarks>Endpoint available for authorized users</remarks>>
     /// <param name="cityId">City Id</param>
     [HttpGet]
     [Route("list/{cityId:guid}")]
-    [Authorize]
+    [Authorize(Roles = "admin,employee,user")]
     [ProducesResponseType(typeof(List<AirportDto>), 200)]
     public async Task<IActionResult> GetAirportsAsync(Guid cityId)
     {
@@ -36,13 +36,13 @@ public class AirportController : ControllerBase
     }
 
     /// <summary>
-    /// Returns airport by airport Id
+    /// Returns airport by airport Id(Admin, Employee, User)
     /// </summary>
     /// <remarks>Endpoint available for authorized users</remarks>>
     /// <param name="airportId">Airport Id</param>
     [HttpGet]
     [Route("{airportId:guid}")]
-    [Authorize]
+    [Authorize(Roles="admin,employee,user")]
     [ProducesResponseType(typeof(AirportDto), 200)]
     public async Task<IActionResult> GetAirportByIdAsync(Guid airportId)
     {
@@ -57,7 +57,7 @@ public class AirportController : ControllerBase
     }
 
     /// <summary>
-    /// Adds airport
+    /// Adds airport(Admin, Employee)
     /// </summary>
     /// <remarks>
     /// Endpoint available for "admin" and "employee" roles<br/>
@@ -79,7 +79,7 @@ public class AirportController : ControllerBase
     }
 
     /// <summary>
-    /// Updates airport name
+    /// Updates airport name(Admin, Employee)
     /// </summary>
     /// <remarks>
     /// Endpoint available for "admin" and "employee" roles<br/>
@@ -101,7 +101,7 @@ public class AirportController : ControllerBase
     }
 
     /// <summary>
-    /// Deletes airport
+    /// Deletes airport(Admin, Employee)
     /// </summary>
     /// <remarks>
     /// Endpoint available for "admin" and "employee" roles<br/>

@@ -2,9 +2,6 @@ using System;
 
 namespace AviaApp.Models.Dto;
 
-public class CountryDto
+public class CountryDto : LocationBase
 {
-    public Guid Id { get; set; }
-
-    public string Name { get; set; }
 }

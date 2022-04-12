@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AviaAppDbContext))]
-    [Migration("20220407110726_AddFlights")]
+    [Migration("20220411154651_AddFlights")]
     partial class AddFlights
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -163,8 +163,14 @@ namespace Data.Migrations
                     b.Property<Guid>("AirportToId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("FlightDateTime")
+                    b.Property<DateTime>("ArrivalDateTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DepartureDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsCanceled")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

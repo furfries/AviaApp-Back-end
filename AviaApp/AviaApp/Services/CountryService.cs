@@ -63,10 +63,9 @@ public class CountryService : ICountryService
         await _context.SaveChangesAsync();
     }
 
-    public async Task AssignCountryAsync(AirportDto airport)
+    public async Task AssignCountryAsync(Airport airport)
     {
-        var country = await _context.Countries.FirstOrDefaultAsync(x => x.Id == airport.City.CountryId);
-        airport.City.Country = _mapper.Map<CountryDto>(country);
+        airport.City.Country = await _context.Countries.FirstAsync(x => x.Id == airport.City.CountryId);
     }
 
     private async Task CheckCountryName(string countryName)
