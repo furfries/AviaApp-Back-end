@@ -114,7 +114,7 @@ public class FlightService : IFlightService
         DateTime flightDateTime)
     {
         var flights = await _context.Flights.Include(x => x.AirportFrom.City.Country)
-            .Where(x => x.ArrivalDateTime.Date.Equals(flightDateTime.Date) &&
+            .Where(x => !x.IsCanceled && x.ArrivalDateTime.Date.Equals(flightDateTime.Date) &&
                         x.AirportFrom.City.CountryId.Equals(countryId)).ToListAsync();
 
         if (airportId is not null)
@@ -132,7 +132,7 @@ public class FlightService : IFlightService
         DateTime flightDateTime)
     {
         var flights = await _context.Flights.Include(x => x.AirportTo.City.Country)
-            .Where(x => x.ArrivalDateTime.Date.Equals(flightDateTime.Date) &&
+            .Where(x => !x.IsCanceled && x.ArrivalDateTime.Date.Equals(flightDateTime.Date) &&
                         x.AirportTo.City.CountryId.Equals(countryId)).ToListAsync();
 
         if (airportId is not null)

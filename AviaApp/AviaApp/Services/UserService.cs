@@ -51,37 +51,45 @@ public class UserService : IUserService
         var role = await _roleManager.FindByNameAsync(model.Role);
         if (role == null)
             return new UpdateRoleResponse
-                {Status = Status.Error, Message = $"The role \'{model.Role}\' does not exist"};
+                { Status = Status.Error, Message = $"The role \'{model.Role}\' does not exist" };
 
         if (userRoles.Contains(model.Role))
             return new UpdateRoleResponse
-                {Status = Status.Error, Message = $"The user \'{model.Email}\' already has this role"};
+                { Status = Status.Error, Message = $"The user \'{model.Email}\' already has this role" };
 
         if (model.Role == Role.Banned)
         {
             await AssignRoleAsync(user, userRoles, Role.Banned);
             return new UpdateRoleResponse
-                {Status = Status.Success, Message = $"User \'{model.Email}\' has been banned"};
+                { Status = Status.Success, Message = $"User \'{model.Email}\' has been banned" };
         }
 
         if (model.Role == Role.User)
         {
             await AssignRoleAsync(user, userRoles, Role.User);
             return new UpdateRoleResponse
-                {Status = Status.Success, Message = $"User \'{model.Email}\' has been unbanned"};
+                { Status = Status.Success, Message = $"User \'{model.Email}\' has been unbanned" };
         }
 
         if (model.Role == Role.Admin && !userRoles.Contains(Role.Employee))
             return new UpdateRoleResponse
-                {Status = Status.Error, Message = $"The user should have \'{Role.Employee}\' role"};
+                { Status = Status.Error, Message = $"The user should have \'{Role.Employee}\' role" };
 
         if (model.Role == Role.Employee && !userRoles.Contains(Role.User))
             return new UpdateRoleResponse
-                {Status = Status.Error, Message = $"The user should have \'{Role.User}\' role"};
+                { Status = Status.Error, Message = $"The user should have \'{Role.User}\' role" };
 
         await _userManager.AddToRoleAsync(user, model.Role);
+
+        var updatedUser = _mapper.Map<UserDto>(user);
+        updatedUser.Roles = await _userManager.GetRolesAsync(user);
+
         return new UpdateRoleResponse
-            {Status = Status.Success, Message = $"The role \'{model.Role}\' has been added successfully!"};
+        {
+            Status = Status.Success,
+            Message = $"The role \'{model.Role}\' has been added successfully!",
+            User = updatedUser,
+        };
     }
 
     public async Task<UpdateRoleResponse> DeleteRoleAsync(UpdateRoleModel model)
@@ -92,23 +100,31 @@ public class UserService : IUserService
         var role = await _roleManager.FindByNameAsync(model.Role);
         if (role == null)
             return new UpdateRoleResponse
-                {Status = Status.Error, Message = $"The role \'{model.Role}\' does not exist"};
+                { Status = Status.Error, Message = $"The role \'{model.Role}\' does not exist" };
 
         if (!userRoles.Contains(model.Role))
             return new UpdateRoleResponse
-                {Status = Status.Error, Message = $"The user does not have \'{model.Role}\' role"};
+                { Status = Status.Error, Message = $"The user does not have \'{model.Role}\' role" };
 
         if (model.Role == Role.Banned || model.Role == Role.User)
             return new UpdateRoleResponse
-                {Status = Status.Error, Message = $"It is not possible to delete \'{model.Role}\' role"};
+                { Status = Status.Error, Message = $"It is not possible to delete \'{model.Role}\' role" };
 
         if (model.Role == Role.Employee && userRoles.Contains(Role.Admin))
             return new UpdateRoleResponse
-                {Status = Status.Error, Message = $"Firstly need to delete \'{Role.Admin}\' role"};
+                { Status = Status.Error, Message = $"Firstly need to delete \'{Role.Admin}\' role" };
 
         await _userManager.RemoveFromRoleAsync(user, model.Role);
+
+        var updatedUser = _mapper.Map<UserDto>(user);
+        updatedUser.Roles = await _userManager.GetRolesAsync(user);
+
         return new UpdateRoleResponse
-            {Status = Status.Success, Message = $"The role \'{model.Role}\' has been deleted successfully"};
+        {
+            Status = Status.Success,
+            Message = $"The role \'{model.Role}\' has been deleted successfully",
+            User = updatedUser,
+        };
     }
 
     private async Task AssignRoleAsync(AviaAppUser user, IEnumerable<string> roles, string role)
