@@ -32,7 +32,7 @@ public class CountryService : ICountryService
         return _mapper.Map<CountryDto>(country);
     }
 
-    public async Task AddCountryAsync(string countryName)
+    public async Task<CountryDto> AddCountryAsync(string countryName)
     {
         await CheckCountryName(countryName);
 
@@ -43,6 +43,8 @@ public class CountryService : ICountryService
         };
         await _context.Countries.AddAsync(country);
         await _context.SaveChangesAsync();
+
+        return _mapper.Map<CountryDto>(await _context.Countries.FirstAsync(x => x.Id.Equals(country.Id)));
     }
 
     public async Task UpdateCountryNameAsync(CountryDto updatedCountry)
@@ -61,11 +63,6 @@ public class CountryService : ICountryService
         var country = await GetCountryIfExistsAsync(countryId);
         _context.Countries.Remove(country);
         await _context.SaveChangesAsync();
-    }
-
-    public async Task AssignCountryAsync(Airport airport)
-    {
-        airport.City.Country = await _context.Countries.FirstAsync(x => x.Id == airport.City.CountryId);
     }
 
     private async Task CheckCountryName(string countryName)

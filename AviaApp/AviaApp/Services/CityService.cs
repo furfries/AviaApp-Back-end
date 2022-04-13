@@ -35,7 +35,7 @@ public class CityService : ICityService
         return _mapper.Map<CityDto>(city);
     }
 
-    public async Task AddCityAsync(AddCityRequest request)
+    public async Task<CityDto> AddCityAsync(AddCityRequest request)
     {
         await CheckCityName(request.CityName, request.CountryId);
 
@@ -47,6 +47,9 @@ public class CityService : ICityService
         };
         await _context.Cities.AddAsync(city);
         await _context.SaveChangesAsync();
+
+        return _mapper.Map<CityDto>(await _context.Cities.Include(x => x.Country)
+            .FirstAsync(x => x.Id.Equals(city.Id)));
     }
 
     public async Task UpdateCityNameAsync(UpdateCityRequest request)

@@ -27,7 +27,7 @@ public class CityController : ControllerBase
     /// <param name="countryId">Country Id</param>
     [HttpGet]
     [Route("list/{countryId:guid}")]
-    [Authorize(Roles="admin,employee,user")]
+    [Authorize(Roles = "admin,employee,user")]
     [ProducesResponseType(typeof(List<CityDto>), 200)]
     public async Task<IActionResult> GetCitiesAsync(Guid countryId)
     {
@@ -41,7 +41,7 @@ public class CityController : ControllerBase
     /// <param name="cityId">City Id</param>
     [HttpGet]
     [Route("{cityId:guid}")]
-    [Authorize(Roles="admin,employee,user")]
+    [Authorize(Roles = "admin,employee,user")]
     [ProducesResponseType(typeof(CityDto), 200)]
     public async Task<IActionResult> GetCityByIdAsync(Guid cityId)
     {
@@ -64,12 +64,12 @@ public class CityController : ControllerBase
     /// </remarks>>
     [HttpPost]
     [Authorize(Roles = "admin,employee")]
+    [ProducesResponseType(typeof(CityDto), 200)]
     public async Task<IActionResult> AddCityAsync(AddCityRequest request)
     {
         try
         {
-            await _cityService.AddCityAsync(request);
-            return Ok($"The city {request.CityName} has been added successfully");
+            return Ok(await _cityService.AddCityAsync(request));
         }
         catch (Exception e)
         {

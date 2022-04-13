@@ -62,12 +62,12 @@ public class CountryController : ControllerBase
     /// </remarks>>
     [HttpPost]
     [Authorize(Roles = "admin,employee")]
+    [ProducesResponseType(typeof(CountryDto), 200)]
     public async Task<IActionResult> AddCountryAsync(string countryName)
     {
         try
         {
-            await _countryService.AddCountryAsync(countryName);
-            return Ok($"The country {countryName} has been added successfully");
+            return Ok(await _countryService.AddCountryAsync(countryName));
         }
         catch (Exception e)
         {

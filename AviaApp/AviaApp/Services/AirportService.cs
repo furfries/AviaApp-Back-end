@@ -26,7 +26,7 @@ public class AirportService : IAirportService
     public async Task<IList<AirportDto>> GetAirportsAsync(Guid cityId)
     {
         return _mapper.Map<IList<AirportDto>>(await _context.Airports.Where(x => x.CityId == cityId)
-            .Include(x => x.City).ToListAsync());
+            .Include(x => x.City.Country).ToListAsync());
     }
 
     public async Task<AirportDto> GetAirportByIdAsync(Guid airportId)
@@ -35,7 +35,7 @@ public class AirportService : IAirportService
         return _mapper.Map<AirportDto>(airport);
     }
 
-    public async Task AddAirportAsync(AddAirportRequest request)
+    public async Task<AirportDto> AddAirportAsync(AddAirportRequest request)
     {
         await CheckAirportName(request.AirportName, request.CityId);
 
@@ -47,6 +47,9 @@ public class AirportService : IAirportService
         };
         await _context.Airports.AddAsync(airport);
         await _context.SaveChangesAsync();
+
+        return _mapper.Map<AirportDto>(await _context.Airports.Include(x => x.City.Country)
+            .FirstAsync(x => x.Id.Equals(airport.Id)));
     }
 
     public async Task UpdateAirportNameAsync(UpdateAirportRequest request)
@@ -69,7 +72,7 @@ public class AirportService : IAirportService
 
     private async Task<Airport> GetAirportIfExistsAsync(Guid airportId)
     {
-        var airport = await _context.Airports.Include(x => x.City).FirstOrDefaultAsync(x => x.Id == airportId);
+        var airport = await _context.Airports.Include(x => x.City.Country).FirstOrDefaultAsync(x => x.Id == airportId);
         if (airport == null)
             throw new Exception("This airport has not been found");
 

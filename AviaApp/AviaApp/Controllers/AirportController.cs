@@ -65,12 +65,12 @@ public class AirportController : ControllerBase
     /// </remarks>>
     [HttpPost]
     [Authorize(Roles = "admin,employee")]
+    [ProducesResponseType(typeof(AirportDto), 200)]
     public async Task<IActionResult> AddAirportAsync(AddAirportRequest request)
     {
         try
         {
-            await _airportService.AddAirportAsync(request);
-            return Ok($"The airport {request.AirportName} has been added successfully");
+            return Ok(await _airportService.AddAirportAsync(request));
         }
         catch (Exception e)
         {
