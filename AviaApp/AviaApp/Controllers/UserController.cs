@@ -22,7 +22,7 @@ public class UserController : ControllerBase
     }
 
     /// <summary>
-    /// Returns list of users
+    /// Returns list of users(Admin, Employee)
     /// </summary>
     /// <remarks>Endpoint available for "admin" and "employee" roles</remarks>>
     [HttpGet]
@@ -35,7 +35,7 @@ public class UserController : ControllerBase
     }
 
     /// <summary>
-    /// Adds new role for user
+    /// Adds new role for user(Admin)
     /// </summary>
     /// <remarks>
     /// Endpoint available only for "admin" role<br/>
@@ -58,7 +58,7 @@ public class UserController : ControllerBase
     }
 
     /// <summary>
-    /// Delete role of user
+    /// Delete role of user(Admin)
     /// </summary>
     /// <remarks>
     /// Endpoint available only for "admin" role<br/>

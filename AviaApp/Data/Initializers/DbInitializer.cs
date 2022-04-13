@@ -32,7 +32,7 @@ public static class DbInitializer
 
         if (await userManager.FindByEmailAsync(FirstUserCreds.AdminEmail) == null)
         {
-            var admin = new AviaAppUser { Email = FirstUserCreds.AdminEmail, UserName = "Admin" };
+            var admin = new AviaAppUser { Email = FirstUserCreds.AdminEmail, UserName = FirstUserCreds.AdminEmail };
             var result = await userManager.CreateAsync(admin, FirstUserCreds.AdminPassword);
 
             if (result.Succeeded)

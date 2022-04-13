@@ -21,13 +21,13 @@ public class CityController : ControllerBase
     }
 
     /// <summary>
-    /// Returns list of cities by country Id
+    /// Returns list of cities by country Id(Admin, Employee, User)
     /// </summary>
     /// <remarks>Endpoint available for authorized users</remarks>>
     /// <param name="countryId">Country Id</param>
     [HttpGet]
     [Route("list/{countryId:guid}")]
-    [Authorize]
+    [Authorize(Roles="admin,employee,user")]
     [ProducesResponseType(typeof(List<CityDto>), 200)]
     public async Task<IActionResult> GetCitiesAsync(Guid countryId)
     {
@@ -41,7 +41,7 @@ public class CityController : ControllerBase
     /// <param name="cityId">City Id</param>
     [HttpGet]
     [Route("{cityId:guid}")]
-    [Authorize]
+    [Authorize(Roles="admin,employee,user")]
     [ProducesResponseType(typeof(CityDto), 200)]
     public async Task<IActionResult> GetCityByIdAsync(Guid cityId)
     {
@@ -56,7 +56,7 @@ public class CityController : ControllerBase
     }
 
     /// <summary>
-    /// Adds city
+    /// Adds city(Admin, Employee)
     /// </summary>
     /// <remarks>
     /// Endpoint available for "admin" and "employee" roles<br/>
@@ -78,7 +78,7 @@ public class CityController : ControllerBase
     }
 
     /// <summary>
-    /// Updates city name
+    /// Updates city name(Admin, Employee)
     /// </summary>
     /// <remarks>
     /// Endpoint available for "admin" and "employee" roles<br/>
@@ -100,7 +100,7 @@ public class CityController : ControllerBase
     }
 
     /// <summary>
-    /// Deletes city
+    /// Deletes city(Admin, Employee)
     /// </summary>
     /// <remarks>
     /// Endpoint available for "admin" and "employee" roles<br/>

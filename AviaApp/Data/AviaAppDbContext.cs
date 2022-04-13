@@ -12,6 +12,8 @@ public class AviaAppDbContext : IdentityDbContext<AviaAppUser>
 
     public DbSet<Airport> Airports { get; set; }
 
+    public DbSet<Flight> Flights { get; set; }
+
     public AviaAppDbContext(DbContextOptions<AviaAppDbContext> options) : base(options)
     {
     }
@@ -31,5 +33,18 @@ public class AviaAppDbContext : IdentityDbContext<AviaAppUser>
         builder.Entity<City>()
             .HasMany(x => x.Airports)
             .WithOne(x => x.City);
+
+        builder.Entity<Flight>()
+            .HasOne(x => x.AirportFrom)
+            .WithMany()
+            .HasForeignKey(x => x.AirportFromId)
+            .OnDelete(DeleteBehavior.ClientCascade);
+            
+
+        builder.Entity<Flight>()
+            .HasOne(x => x.AirportTo)
+            .WithMany()
+            .HasForeignKey(x => x.AirportToId)
+            .OnDelete(DeleteBehavior.ClientCascade);
     }
 }
