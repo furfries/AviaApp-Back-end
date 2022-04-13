@@ -12,7 +12,7 @@ public interface ICityService
 
     Task<CityDto> GetCityByIdAsync(Guid cityId);
 
-    Task AddCityAsync(AddCityRequest request);
+    Task<CityDto> AddCityAsync(AddCityRequest request);
 
     Task UpdateCityNameAsync(UpdateCityRequest request);
 

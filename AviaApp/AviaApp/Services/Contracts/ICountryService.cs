@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AviaApp.Models.Dto;
-using Data.Entities;
 
 namespace AviaApp.Services.Contracts;
 
@@ -12,11 +11,9 @@ public interface ICountryService
 
     Task<CountryDto> GetCountryByIdAsync(Guid countryId);
 
-    Task AddCountryAsync(string countryName);
+    Task<CountryDto> AddCountryAsync(string countryName);
 
     Task UpdateCountryNameAsync(CountryDto updatedCountry);
 
     Task DeleteCountryAsync(Guid countryId);
-
-    Task AssignCountryAsync(Airport airport);
 }

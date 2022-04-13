@@ -12,7 +12,7 @@ public interface IAirportService
 
     Task<AirportDto> GetAirportByIdAsync(Guid airportId);
 
-    Task AddAirportAsync(AddAirportRequest request);
+    Task<AirportDto> AddAirportAsync(AddAirportRequest request);
 
     Task UpdateAirportNameAsync(UpdateAirportRequest request);
 
