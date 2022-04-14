@@ -37,7 +37,25 @@ public class FlightProfile : Profile
                 dest => dest.Country,
                 opt =>
                     opt.MapFrom(x => x.City.Country));
-        
+
+
+        CreateMap<City, LocationViewModel>()
+            .ForMember(
+                dest => dest.City,
+                opt =>
+                    opt.MapFrom(x => x))
+            .ForMember(
+                dest => dest.Country,
+                opt =>
+                    opt.MapFrom(x => x.Country));
+
+
+        CreateMap<Country, LocationViewModel>()
+            .ForMember(
+                dest => dest.Country,
+                opt =>
+                    opt.MapFrom(x => x));
+
 
         CreateMap<Airport, AirportViewModel>();
         CreateMap<AirportViewModel, Airport>();
