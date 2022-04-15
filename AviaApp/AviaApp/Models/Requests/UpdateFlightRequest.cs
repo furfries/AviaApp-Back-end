@@ -11,4 +11,6 @@ public class UpdateFlightRequest
     public DateTime? ArrivalDateTime { get; set; }
 
     public string Airplane { get; set; }
+
+    public decimal? Price { get; set; }
 }

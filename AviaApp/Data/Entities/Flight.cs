@@ -16,6 +16,8 @@ public class Flight
 
     public bool IsCanceled { get; set; }
 
+    public decimal Price { get; set; }
+
     public Airport AirportFrom { get; set; }
 
     public Airport AirportTo { get; set; }

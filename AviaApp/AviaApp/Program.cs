@@ -1,5 +1,6 @@
-using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using AviaApp.Services;
 using Data.Entities;
 using Data.Initializers;
 using Microsoft.AspNetCore.Hosting;
@@ -21,9 +22,36 @@ namespace AviaApp
                 {
                     var userManager = services.GetRequiredService<UserManager<AviaAppUser>>();
                     var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                    var cabinClassService = services.GetRequiredService<CabinClassService>();
+
+                    var cabinClasses = new List<CabinClass>
+                    {
+                        new()
+                        {
+                            Name = "Economy",
+                            PricePerCent = 0,
+                        },
+                        new()
+                        {
+                            Name = "Premium Economy",
+                            PricePerCent = 30,
+                        },
+                        new()
+                        {
+                            Name = "Business",
+                            PricePerCent = 60,
+                        },
+                        new()
+                        {
+                            Name = "First",
+                            PricePerCent = 100,
+                        },
+                    };
+                    await cabinClassService.AddCabinClassesAsync(cabinClasses);
+
                     await DbInitializer.InitializeAsync(userManager, rolesManager);
                 }
-                catch(Exception ex)
+                catch
                 {
                     // ignored
                 }

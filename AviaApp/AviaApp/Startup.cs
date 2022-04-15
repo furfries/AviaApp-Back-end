@@ -42,6 +42,8 @@ namespace AviaApp
             services.AddScoped<IAirportService, AirportService>();
             services.AddScoped<IFlightService, FlightService>();
             services.AddScoped<IQuickSearchService, QuickSearchService>();
+            services.AddScoped<ICabinClassService, CabinClassService>();
+            services.AddScoped<CabinClassService>();
 
             // For Identity  
             services.AddIdentity<AviaAppUser, IdentityRole>()
@@ -130,6 +132,7 @@ namespace AviaApp
             {
                 app.UseDeveloperExceptionPage();
             }
+
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AviaApp v1"));
 
