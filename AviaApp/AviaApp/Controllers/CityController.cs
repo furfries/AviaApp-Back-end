@@ -35,7 +35,7 @@ public class CityController : ControllerBase
     }
 
     /// <summary>
-    /// Returns city by city Id
+    /// Returns city by city Id(Admin, Employee, User)
     /// </summary>
     /// <remarks>Endpoint available for authorized users</remarks>>
     /// <param name="cityId">City Id</param>

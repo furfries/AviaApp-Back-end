@@ -16,11 +16,13 @@ public class FlightService : IFlightService
 {
     private readonly IMapper _mapper;
     private readonly AviaAppDbContext _context;
+    private readonly ICabinClassService _cabinClassService;
 
-    public FlightService(IMapper mapper, AviaAppDbContext context)
+    public FlightService(IMapper mapper, AviaAppDbContext context, ICabinClassService cabinClassService)
     {
         _mapper = mapper;
         _context = context;
+        _cabinClassService = cabinClassService;
     }
 
     public async Task<IList<FlightViewModel>> GetFlightsByDateRangeAsync(DateTime? dateFrom, DateTime? dateTo)
@@ -45,7 +47,9 @@ public class FlightService : IFlightService
         var flightsByToParameters = await GetFlightsToBySearchParametersAsync(request.CountryIdTo,
             request.CityIdTo, request.AirportIdTo, request.FlightDateTime);
 
-        var flights = flightsByFromParameters.Where(x => flightsByToParameters.Any(y => y.Id.Equals(x.Id)));
+        var flights = flightsByFromParameters.Where(x => flightsByToParameters.Any(y => y.Id.Equals(x.Id))).ToList();
+
+        await SetPricesAsync(flights, request.CabinClassId);
 
         return _mapper.Map<IList<FlightViewModel>>(flights);
     }
@@ -83,6 +87,7 @@ public class FlightService : IFlightService
         flight.DepartureDateTime = request.DepartureDateTime ?? flight.DepartureDateTime;
         flight.ArrivalDateTime = request.ArrivalDateTime ?? flight.ArrivalDateTime;
         flight.Airplane = request.Airplane ?? flight.Airplane;
+        flight.Price = request.Price ?? flight.Price;
 
         CheckDates(flight.DepartureDateTime, flight.ArrivalDateTime);
 
@@ -123,6 +128,23 @@ public class FlightService : IFlightService
         return cityId is not null
             ? flights.Where(x => x.AirportFrom.CityId.Equals(cityId)).ToList()
             : flights;
+    }
+
+    private async Task SetPricesAsync(IList<Flight> flights, int cabinClassId)
+    {
+        var cabinClass = await _cabinClassService.GetByIdAsync(cabinClassId);
+        if (cabinClass is null)
+            throw new Exception("The cabin class has not been found");
+
+        foreach (var flight in flights)
+        {
+            flight.Price = GetPrice(flight.Price, cabinClass.PricePerCent);
+        }
+    }
+
+    private decimal GetPrice(decimal price, int pricePerCent)
+    {
+        return price + (price / 100 * pricePerCent);
     }
 
     private async Task<IList<Flight>> GetFlightsToBySearchParametersAsync(

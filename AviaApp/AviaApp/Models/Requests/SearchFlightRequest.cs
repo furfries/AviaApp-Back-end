@@ -13,6 +13,8 @@ public class SearchFlightRequest
     
     public Guid? CityIdTo { get; set; }
 
+    public int CabinClassId { get; set; }
+
     [Required]
     public Guid CountryIdFrom { get; set; }
 

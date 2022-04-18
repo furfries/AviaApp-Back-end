@@ -12,5 +12,7 @@ public class AddFlightRequest
 
     public DateTime ArrivalDateTime { get; set; }
 
+    public decimal Price { get; set; }
+
     public string Airplane { get; set; }
 }

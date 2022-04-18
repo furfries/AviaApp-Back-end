@@ -20,7 +20,7 @@ public class CountryController : ControllerBase
     }
 
     /// <summary>
-    /// Returns list of countries(Admin, Employee)
+    /// Returns list of countries(Admin, Employee, User)
     /// </summary>
     /// <remarks>Endpoint available for authorized users</remarks>>
     [HttpGet]

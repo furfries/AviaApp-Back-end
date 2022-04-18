@@ -13,6 +13,8 @@ public class AviaAppDbContext : IdentityDbContext<AviaAppUser>
     public DbSet<Airport> Airports { get; set; }
 
     public DbSet<Flight> Flights { get; set; }
+    
+    public DbSet<CabinClass> CabinClasses { get; set; }
 
     public AviaAppDbContext(DbContextOptions<AviaAppDbContext> options) : base(options)
     {
