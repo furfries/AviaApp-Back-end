@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AviaApp.Controllers;
 
 [ApiController]
-[Microsoft.AspNetCore.Components.Route("[controller]")]
+[Route("[controller]")]
 public class CabinClassController : ControllerBase
 {
     private readonly ICabinClassService _cabinClassService;

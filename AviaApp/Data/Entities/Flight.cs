@@ -8,7 +8,7 @@ public class Flight
 
     public Guid AirportToId { get; set; }
 
-    public string Airplane { get; set; }
+    public string Airplane { get; set; } = string.Empty;
 
     public DateTime DepartureDateTime { get; set; }
 
@@ -18,7 +18,7 @@ public class Flight
 
     public decimal Price { get; set; }
 
-    public Airport AirportFrom { get; set; }
+    public Airport? AirportFrom { get; set; }
 
-    public Airport AirportTo { get; set; }
+    public Airport? AirportTo { get; set; }
 }
