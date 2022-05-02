@@ -44,6 +44,7 @@ namespace AviaApp
             services.AddScoped<IQuickSearchService, QuickSearchService>();
             services.AddScoped<ICabinClassService, CabinClassService>();
             services.AddScoped<CabinClassService>();
+            services.AddScoped<IBookingService, BookingService>();
 
             // For Identity  
             services.AddIdentity<AviaAppUser, IdentityRole>()
