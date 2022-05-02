@@ -21,4 +21,6 @@ public class Flight
     public Airport? AirportFrom { get; set; }
 
     public Airport? AirportTo { get; set; }
+
+    public IList<Booking>? Bookings { get; set; }
 }

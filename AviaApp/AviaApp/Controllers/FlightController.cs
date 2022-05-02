@@ -137,7 +137,6 @@ public class FlightController : ControllerBase
     /// </remarks>
     [HttpDelete]
     [Authorize(Roles = "admin")]
-    [ProducesResponseType(typeof(FlightViewModel), 200)]
     public async Task<IActionResult> DeleteFlightAsync(Guid flightId)
     {
         try
@@ -160,12 +159,33 @@ public class FlightController : ControllerBase
     [HttpDelete]
     [Route("cancel")]
     [Authorize(Roles = "admin")]
-    [ProducesResponseType(typeof(FlightViewModel), 200)]
     public async Task<IActionResult> CancelFlightAsync(Guid flightId)
     {
         try
         {
             await _flightService.CancelFlightAsync(flightId);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    /// <summary>
+    /// Deletes outdated flights(Admin)
+    /// </summary>
+    /// <remarks>
+    /// The endpoint available for auto job role<br/>
+    /// </remarks>
+    [HttpDelete]
+    [Route("outdated")]
+    [Authorize(Roles = "auto-job")]
+    public async Task<IActionResult> DeleteOutdatedFlightsAsync()
+    {
+        try
+        {
+            await _flightService.DeleteOutdatedFlightsAsync();
             return Ok();
         }
         catch (Exception e)
