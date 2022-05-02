@@ -24,5 +24,19 @@ public static class UserInitializer
                 await userManager.ConfirmEmailAsync(admin, token);
             }
         }
+        if (await userManager.FindByEmailAsync(FirstUserCreds.AutoJobEmail) == null)
+        {
+            var autoJobUser = new AviaAppUser { Email = FirstUserCreds.AutoJobEmail, UserName = FirstUserCreds.AutoJobEmail };
+            var result = await userManager.CreateAsync(autoJobUser, FirstUserCreds.AutoJobPassword);
+
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(autoJobUser, Role.Admin);
+                await userManager.AddToRoleAsync(autoJobUser, Role.AutoJob);
+
+                var token = await userManager.GenerateEmailConfirmationTokenAsync(autoJobUser);
+                await userManager.ConfirmEmailAsync(autoJobUser, token);
+            }
+        }
     }
 }

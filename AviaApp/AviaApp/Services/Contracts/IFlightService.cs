@@ -21,4 +21,6 @@ public interface IFlightService
     Task DeleteFlightAsync(Guid flightId);
 
     Task CancelFlightAsync(Guid flightId);
+
+    Task DeleteOutdatedFlightsAsync();
 }

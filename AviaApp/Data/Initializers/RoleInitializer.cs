@@ -26,5 +26,10 @@ public static class RoleInitializer
         {
             await roleManager.CreateAsync(new IdentityRole(Role.Banned));
         }
+
+        if (await roleManager.FindByNameAsync(Role.AutoJob) == null)
+        {
+            await roleManager.CreateAsync(new IdentityRole(Role.AutoJob));
+        }
     } 
 }

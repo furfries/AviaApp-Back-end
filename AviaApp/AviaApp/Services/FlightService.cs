@@ -112,6 +112,17 @@ public class FlightService : IFlightService
         await _context.SaveChangesAsync();
     }
 
+    public async Task DeleteOutdatedFlightsAsync()
+    {
+        var outdatedFlights = await _context.Flights
+            .Include(x => x.Bookings)
+            .Where(x => x.DepartureDateTime < DateTime.Now.Date && !x.Bookings.Any())
+            .ToListAsync();
+        
+        _context.RemoveRange(outdatedFlights);
+        await _context.SaveChangesAsync();
+    }
+
     private async Task<IList<Flight>> GetFlightsFromBySearchParametersAsync(
         Guid countryId,
         Guid? cityId,
@@ -126,7 +137,7 @@ public class FlightService : IFlightService
             return flights.Where(x => x.AirportFromId.Equals(airportId)).ToList();
 
         return cityId is not null
-            ? flights.Where(x => x.AirportFrom.CityId.Equals(cityId)).ToList()
+            ? flights.Where(x => x.AirportFrom!.CityId.Equals(cityId)).ToList()
             : flights;
     }
 
@@ -161,7 +172,7 @@ public class FlightService : IFlightService
             return flights.Where(x => x.AirportToId.Equals(airportId)).ToList();
 
         return cityId is not null
-            ? flights.Where(x => x.AirportTo.CityId.Equals(cityId)).ToList()
+            ? flights.Where(x => x.AirportTo!.CityId.Equals(cityId)).ToList()
             : flights;
     }
 

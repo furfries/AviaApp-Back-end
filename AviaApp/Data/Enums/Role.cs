@@ -9,4 +9,6 @@ public static class Role
     public static string User => "user";
 
     public static string Banned => "banned";
+
+    public static string AutoJob => "auto-job";
 }
